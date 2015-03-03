@@ -2,12 +2,16 @@
 # Create the imagenet lmdb inputs
 # N.B. set the path to the imagenet train + val data dirs
 
-EXAMPLE=examples/imagenet
-DATA=../data/train
-TOOLS=build/tools
+EXAMPLE=../demo
+DATA=../data/
+TOOLS=../../caffe/build/tools
 
-TRAIN_DATA_ROOT=../data/train/
-VAL_DATA_ROOT=../data/train/
+TRAIN_DATA_ROOT=../data/
+VAL_DATA_ROOT=../data/
+
+rm -r $EXAMPLE/plankton_val_lmdb
+rm -r $EXAMPLE/plankton_train_lmdb
+
 
 # Set RESIZE=true to resize the images to 256x256. Leave as false if images have
 # already been resized using another tool.
