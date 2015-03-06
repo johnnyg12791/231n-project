@@ -8,8 +8,10 @@ curr_class = 0
 labels_file = open("../data/classes.csv", "w")
 train_file = open("../data/train.txt", "w")
 val_file = open("../data/val.txt", "w")
+class_names_file = open("../data/alphabetical_class_list.txt")
+#class_folders = [item for item in os.listdir(directory) if not os.path.isfile(os.path.join(directory, item))]
+class_folders = [line.strip() for line in class_names_file]
 
-class_folders = [item for item in os.listdir(directory) if not os.path.isfile(os.path.join(directory, item))]
 for class_folder in class_folders:
 	labels_file.write(class_folder + "," + str(curr_class) + "\n")
 	images = [item for item in os.listdir(directory + '/' + class_folder)]
@@ -24,6 +26,8 @@ for class_folder in class_folders:
 			else:
 				train_file.write(image_file_line)		
 	curr_class += 1
+	
+
 
 
 labels_file.close()
