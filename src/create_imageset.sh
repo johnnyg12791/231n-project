@@ -2,15 +2,14 @@
 # Create the imagenet lmdb inputs
 # N.B. set the path to the imagenet train + val data dirs
 
-EXAMPLE=../demo
 DATA=../data/
 TOOLS=../../caffe/build/tools
 
 TRAIN_DATA_ROOT=../data/
 VAL_DATA_ROOT=../data/
 
-rm -r $EXAMPLE/plankton_val_lmdb
-rm -r $EXAMPLE/plankton_train_lmdb
+rm -r $DATA/plankton_val_lmdb
+rm -r $DATA/plankton_train_lmdb
 
 
 # Set RESIZE=true to resize the images to 256x256. Leave as false if images have
@@ -44,9 +43,10 @@ GLOG_logtostderr=1 $TOOLS/convert_imageset \
     --resize_height=$RESIZE_HEIGHT \
     --resize_width=$RESIZE_WIDTH \
     --shuffle \
+    --gray \
     $TRAIN_DATA_ROOT \
     $DATA/train.txt \
-    $EXAMPLE/plankton_train_lmdb
+    $DATA/plankton_train_lmdb
 
 echo "Creating val lmdb..."
 
@@ -54,8 +54,9 @@ GLOG_logtostderr=1 $TOOLS/convert_imageset \
     --resize_height=$RESIZE_HEIGHT \
     --resize_width=$RESIZE_WIDTH \
     --shuffle \
+    --gray \
     $VAL_DATA_ROOT \
     $DATA/val.txt \
-    $EXAMPLE/plankton_val_lmdb
+    $DATA/plankton_val_lmdb
 
 echo "Done."
