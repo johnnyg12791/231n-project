@@ -2,7 +2,7 @@
 # Create the imagenet lmdb inputs
 # N.B. set the path to the imagenet train + val data dirs
 
-DATA=../data/
+DATA=../data
 TOOLS=../../caffe/build/tools
 
 TRAIN_DATA_ROOT=../data/
