@@ -4,7 +4,7 @@ import os
 import sys
 import math
 
-BATCH_SIZE = 200
+BATCH_SIZE = 500
 
 # hack sys.path so we can import caffe
 caffe_python_path = '~/caffe/python'
@@ -16,7 +16,7 @@ import caffe
 caffe.set_mode_gpu()
 
 model_file = '../plankton_caffenet/plankton_deploy.prototxt'
-weights_file = '../plankton_caffenet/snapshot_iter_4501.caffemodel'
+weights_file = '../plankton_caffenet/snapshot_iter_10000.caffemodel'
 net = caffe.Net(model_file, weights_file, caffe.TEST)
 
 directory = '../data/test'
@@ -25,6 +25,11 @@ outputFile = open('../data/submission.csv', 'w')
 images = [item for item in os.listdir(directory)]
 num_images = len(images)
 num_batches = int(math.ceil(num_images / BATCH_SIZE))
+
+mean_file =  '../data/plankton_mean.npy'
+mean = np.load(mean_file)
+low, high = np.min(mean), np.max(mean)
+mean = 255.0 * (mean - low) / (high - low)
 
 input_data = np.zeros((len(images), 1, 227, 227))
 for batch_num in range(num_batches):
@@ -38,16 +43,14 @@ for batch_num in range(num_batches):
     img = imread('../data/test/' + image)
   
     # Resize image to same size as mean
-    #H_mean, W_mean = mean.shape[1:]
-    # TODO
-    H_mean,W_mean = 256, 256
+    H_mean, W_mean = mean.shape[1:]
     img = imresize(img, (H_mean, W_mean))
     
     # Reshape from (H, W, K) to (K, H, W)
     #img = img.transpose(2, 0, 1)
     
     # Subtract mean
-    #img = img - mean
+    img = img - mean
     
     # Crop to input size of network
     H_in, W_in = net.blobs['data'].data.shape[2:]
@@ -55,7 +58,7 @@ for batch_num in range(num_batches):
     H1 = H0 + H_in
     W0 = (W_mean - W_in) / 2
     W1 = W0 + W_in
-    img = img[H0:H1, W0:W1]
+    img = img[:, H0:H1, W0:W1]
   
     # Copy input data to input blob of the network
     net.blobs['data'].data[i] = img
