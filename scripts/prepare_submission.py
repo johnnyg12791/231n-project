@@ -24,7 +24,7 @@ outputFile = open('../data/submission.csv', 'w')
 
 images = [item for item in os.listdir(directory)]
 num_images = len(images)
-num_batches = int(math.ceil(num_images / BATCH_SIZE))
+num_batches = int(math.ceil(num_images / float(BATCH_SIZE)))
 
 mean_file =  '../data/plankton_mean.npy'
 mean = np.load(mean_file)
