@@ -12,12 +12,12 @@ rm -r $DATA/plankton_val_lmdb
 rm -r $DATA/plankton_train_lmdb
 
 
-# Set RESIZE=true to resize the images to 256x256. Leave as false if images have
+# Set RESIZE=true to resize the images to 48x48. Leave as false if images have
 # already been resized using another tool.
 RESIZE=true
 if $RESIZE; then
-  RESIZE_HEIGHT=256
-  RESIZE_WIDTH=256
+  RESIZE_HEIGHT=48
+  RESIZE_WIDTH=48
 else
   RESIZE_HEIGHT=0
   RESIZE_WIDTH=0

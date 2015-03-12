@@ -1,6 +1,6 @@
 import os
 
-directory = '../data/train'
+directory = '../data/train_aug_2'
 
 curr_class = 0
 
@@ -16,7 +16,7 @@ for class_folder in class_folders:
 	for i, image in enumerate(images):
 		if image == '.DS_Store': continue
 		
-		image_file_line = 'train/' + class_folder + '/' + image + " " + str(curr_class) + "\n"
+		image_file_line = 'train_aug_2/' + class_folder + '/' + image + " " + str(curr_class) + "\n"
 		if i % 10 == 0:
 			val_file.write(image_file_line)
 		else:
