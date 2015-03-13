@@ -5,4 +5,5 @@ TOOLS=./../../caffe/build/tools
 
 $TOOLS/caffe train \
   --solver=plankton_solver.prototxt \
-  --weights $CAFFE/models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel
+  --weights ../data/bvlc_reference_caffenet_surgery.caffemodel \
+  -gpu 0

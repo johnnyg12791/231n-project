@@ -1,9 +1,9 @@
 name: "CaffeNet"
 input: "data"
-input_dim: 500
+input_dim: 10
 input_dim: 1
-input_dim: 48
-input_dim: 48
+input_dim: 227
+input_dim: 227
 layer {
   name: "conv1"
   type: "Convolution"
@@ -148,7 +148,7 @@ layer {
   }
 }
 layer {
-  name: "plankton-fc6"
+  name: "fc6"
   type: "InnerProduct"
   bottom: "pool5"
   top: "fc6"
@@ -163,7 +163,16 @@ layer {
   top: "fc6"
 }
 layer {
-  name: "plankton-fc7"
+  name: "drop6"
+  type: "Dropout"
+  bottom: "fc6"
+  top: "fc6"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7"
   type: "InnerProduct"
   bottom: "fc6"
   top: "fc7"
@@ -178,12 +187,21 @@ layer {
   top: "fc7"
 }
 layer {
-  name: "plankton-fc8"
+  name: "drop7"
+  type: "Dropout"
+  bottom: "fc7"
+  top: "fc7"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc8"
   type: "InnerProduct"
   bottom: "fc7"
   top: "fc8"
   inner_product_param {
-    num_output: 121
+    num_output: 1000
   }
 }
 layer {
